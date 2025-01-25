@@ -2,11 +2,8 @@ package com.trimindtech.assignment.model;
 
 import java.sql.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+public class PaymentTermsDTO {
 
-public class PaymentTerms {
-	
 	private Long id;
 	private String code;
 	private String description;
@@ -56,7 +53,5 @@ public class PaymentTerms {
 		return "PaymentTerms [id=" + id + ", code=" + code + ", description=" + description + ", creationDate="
 				+ creationDate + ", days=" + days + ", remindBeforeDays=" + remindBeforeDays + "]";
 	}
-	
-	
 
 }

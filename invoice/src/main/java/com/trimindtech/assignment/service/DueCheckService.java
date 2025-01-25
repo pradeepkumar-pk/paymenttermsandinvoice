@@ -12,18 +12,17 @@ import org.springframework.web.client.RestTemplate;
 
 import com.trimindtech.assignment.model.Invoice;
 import com.trimindtech.assignment.model.PaymentTerms;
-import com.trimindtech.assignment.repository.PaymentRepository;
 
 @Component
 public class DueCheckService {
 	
-	@Autowired
-	PaymentRepository paymentRepository;
+	
 	@Autowired
 	InvoiceService invoiceService;
 	
-	    @Scheduled(cron="0 17 01 * * *")
+	    @Scheduled(cron="*/5 * * * * *")
 		public void checkDue() {
+	    	System.out.println("--------due check service--------");
 			List<Invoice> list = invoiceService.getInvoiceByStatusUnpaid();
 			for(Invoice inv: list) {
 				if(inv.getStatus().equalsIgnoreCase("UNPAID")) {
@@ -41,11 +40,14 @@ public class DueCheckService {
 
 	    
 	    public PaymentTerms getPaymentTermsByCode(String strCode){
-	    	final String uri = "http://localhost:8080/code/{code}";
+	    	final String uri = "http://payterms:8080/code/{code}";
 	        RestTemplate restTemplate = new RestTemplate();
 	        Map<String, String> params = new HashMap<>();
 	        params.put("code", strCode);
 	        return restTemplate.getForObject(uri, PaymentTerms.class, params);
+
+//	        PaymentTerms paymentTerms = modelMapper.map(restTemplate.getForObject(uri, PaymentTerms.class, params), PaymentTerms.class);
+//	        return paymentTerms;
 	    }
 
 

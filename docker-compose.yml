@@ -1,0 +1,26 @@
+version: '2'
+services:
+
+  payterms:
+    image: paymenttermsandinvoice-payterms
+#    image: payment-terms
+#    build: ./payment-terms
+    ports:
+      - 8080:8080
+    networks:
+      - mynetwork
+
+  invoice:
+    image: paymenttermsandinvoice-invoice
+#    image: invoice
+#    build: ./invoice
+#    links:  //Legacy-not required in v2
+#      - payterms
+    depends_on:
+      - payterms
+    networks:
+      - mynetwork
+
+
+networks:
+  mynetwork:
